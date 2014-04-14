@@ -2,7 +2,7 @@ package com.liuhao.test;
 
 import org.junit.Test;
 
-import com.liuhao.algorithm.LinkList;
+import com.liuhao.DataStructures.LinkList;
 
 public class LinkListTest {
 

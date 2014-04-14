@@ -2,7 +2,7 @@ package com.liuhao.test;
 
 import org.junit.Test;
 
-import com.liuhao.algorithm.SequenceList;
+import com.liuhao.DataStructures.SequenceList;
 
 public class SequeceListTest {
 

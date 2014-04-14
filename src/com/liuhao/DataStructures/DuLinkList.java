@@ -1,4 +1,4 @@
-package com.liuhao.algorithm;
+package com.liuhao.DataStructures;
 
 public class DuLinkList<T> {
 

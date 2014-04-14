@@ -2,7 +2,7 @@ package com.liuhao.test;
 
 import org.junit.Test;
 
-import com.liuhao.algorithm.DuLinkList;
+import com.liuhao.DataStructures.DuLinkList;
 
 public class DuLinkListTest {
 
