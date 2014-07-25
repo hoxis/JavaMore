@@ -36,6 +36,7 @@ public class TreeParent<E> {
 	private int nodeNums;
 
 	// 以指定节点创建树
+	@SuppressWarnings("unchecked")
 	public TreeParent(E data) {
 		this.treeSize = DEFAULT_TREE_SIZE;
 		this.nodes = new Node[treeSize];
@@ -44,6 +45,7 @@ public class TreeParent<E> {
 	}
 
 	// 以指定根节点、指定treeSize创建树
+	@SuppressWarnings("unchecked")
 	public TreeParent(E data, int treeSize) {
 		this.treeSize = treeSize;
 		this.nodes = new Node[treeSize];
