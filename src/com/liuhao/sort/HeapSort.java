@@ -1,85 +1,85 @@
 package com.liuhao.sort;
 
-/**
- * @author liuhao
- * ¶ÑÅÅĞò
- */
+import java.util.Arrays;
+
 public class HeapSort {
+	public static void heapSort(DataWrap[] data) {
+		System.out.println("å¼€å§‹æ’åº");
+		int arrayLen = data.length;
 
-	/*
-	 * ÊäÈë£ºÊı×éa£¬¶ÑµÄ³¤¶ÈheapLen£¬ÒÔ¼°ĞèÒªµ÷ÕûµÄ½Úµãi
+		// å¾ªç¯å»ºå †
+		for (int i = 0; i < arrayLen - 1; i++) {
+			// å»ºå †
+			buildMaxHeap(data, arrayLen - 1 - i);
+			// äº¤æ¢å †é¡¶å…ƒç´ å’Œå¤§é¡¶å †çš„æœ€åä¸€ä¸ªå…ƒç´ 
+			swap(data, 0, arrayLen - 1 - i);
+			System.out.println(Arrays.toString(data));
+		}
+	}
+
+	/**
+	 * å¯¹dataæ•°ç»„ä»0åˆ°lastIndexå»ºå¤§é¡¶å †
 	 * 
-	 * ¹¦ÄÜ£ºµ÷¶Ñ
+	 * @param data
+	 * @param lastIndex
 	 */
-	void adjustHeap(int[] a, int heapLen, int i) {
-		int left = LeftChild(i);
-		int right = RightChild(i);
-		int largest = i;
-		int temp = 0;
+	private static void buildMaxHeap(DataWrap[] data, int lastIndex) {
 
-		while (left < heapLen || right < heapLen) {
+		// ä»lastIndexå¤„èŠ‚ç‚¹ï¼ˆæœ€åä¸€ä¸ªèŠ‚ç‚¹ï¼‰çš„çˆ¶èŠ‚ç‚¹å¼€å§‹
+		for (int i = (lastIndex - 1) / 2; i >= 0; i--) {
+			int k = i; // ä¿å­˜å½“å‰æ­£åœ¨åˆ¤æ–­çš„èŠ‚ç‚¹
 
-			// Á½¸öifÓï¾ä¿ÉÒÔµÃ³ö¸¸½ÚµãºÍ×óÓÒ×Ó½ÚµãÖĞ£¬ÊıÖµ×î´óµÄÊÇÄÄ¸ö£¬²¢ÓÃlargestÖ¸ÏòËü
-			if (left < heapLen && a[largest] < a[left]) {
-				largest = left;
-			}
+			// å¦‚æœå½“å‰kèŠ‚ç‚¹çš„å­èŠ‚ç‚¹å­˜åœ¨
+			while (k * 2 + 1 <= lastIndex) {
+				int biggerIndex = 2 * k + 1; // kèŠ‚ç‚¹çš„å·¦å­èŠ‚ç‚¹çš„ç´¢å¼•
 
-			if (right < heapLen && a[largest] < a[right]) {
-				largest = right;
-			}
+				// å¦‚æœbiggerIndex < lastIndexï¼Œä»£è¡¨kèŠ‚ç‚¹å­˜åœ¨å³å­èŠ‚ç‚¹ï¼Œ
+				//é‚£å°±å…ˆæ¯”è¾ƒå·¦ã€å³èŠ‚ç‚¹çš„å€¼å¤§å°ï¼Œå¹¶å°†å¤§è€…ç´¢å¼•æ”¾åœ¨biggerIndex
+				if (biggerIndex < lastIndex) {
+					if (data[biggerIndex].compareTo(data[biggerIndex + 1]) < 0) {
+						biggerIndex++;// biggerIndexæ€»æ˜¯ä»£è¡¨è¾ƒå¤§å­èŠ‚ç‚¹çš„ç´¢å¼•
+					}
+				}
 
-			if (i != largest) { // Èç¹û×î´óÖµ²»ÊÇ¸¸½Úµã
-				temp = a[largest]; // ½»»»¸¸½ÚµãºÍ×î´óÖµµÄ×Ó½Úµã
-				a[largest] = a[i];
-				a[i] = temp;
+				// kèŠ‚ç‚¹å¤„çš„å€¼å°äºå…¶å­èŠ‚ç‚¹çš„å€¼
+				if (data[k].compareTo(data[biggerIndex]) < 0) {
+					swap(data, k, biggerIndex);
 
-				i = largest; // ĞÂµÄ¸¸½ÚµãºÍ×Ó½Úµã
-				left = LeftChild(i);
-				right = RightChild(i);
-			}
-
-			else {
-				break;
+					// é‡æ–°ä¿è¯kèŠ‚ç‚¹çš„å€¼å¤§äºå…¶å­èŠ‚ç‚¹çš„å€¼ï¼Œä¸»è¦ç”¨äºä¿è¯äº¤æ¢åkçš„å­èŠ‚ç‚¹ä¹Ÿæ»¡è¶³å¤§é¡¶å †
+					k = biggerIndex;
+				} else {
+					break;
+				}
 			}
 		}
 	}
 
-	/*
-	 * ÊäÈë£ºÊı×éa£¬¶ÑµÄ´óĞ¡heapLen
+	/**
+	 * äº¤æ¢dataæ•°ç»„iã€jç´¢å¼•å¤„çš„å…ƒç´ 
 	 * 
-	 * ¹¦ÄÜ£º¼ü¶Ñ
-	*/
-	void buildHeap(int a[], int heapLen) {
-		int i = 0;
-		int begin = heapLen / 2 - 1; // ×îºóÒ»¸ö·ÇÒ¶×Ó½Úµã
-		for (i = begin; i >= 0; i--) {
-			adjustHeap(a, heapLen, i);
-		}
-	}
-	
-	public int[] heapSort(int[] a){
-		int heapLen = a.length;
-		int temp;
-		
-		buildHeap(a, heapLen);
-		
-		while (heapLen > 1){
-			temp = a[heapLen-1];
-			a[heapLen-1] = a[0];
-			a[0] = temp;
-			heapLen--;
-			adjustHeap(a, heapLen, 0);
-		}
-		
-		return a;
+	 * @param data
+	 * @param i
+	 * @param j
+	 */
+	private static void swap(DataWrap[] data, int i, int j) {
+		DataWrap tmp = data[i];
+		data[i] = data[j];
+		data[j] = tmp;
 	}
 
-	private int RightChild(int i) {
-		return (i << 1) + 1;
-	}
+	public static void main(String[] args) {
+		DataWrap[] data = { 
+				new DataWrap(21, "")
+				,new DataWrap(30, "")
+				,new DataWrap(49, "")
+				,new DataWrap(30, "*")
+				,new DataWrap(16, "")
+				,new DataWrap(9, "") };
 
-	private int LeftChild(int i) {
-		return (i << 1) + 2;
-	}
+		System.out.println("æ’åºä¹‹å‰ï¼š" + Arrays.toString(data));
 
+		heapSort(data);
+
+		System.out.println("æ’åºä¹‹åï¼š" + Arrays.toString(data));
+	}
 }
