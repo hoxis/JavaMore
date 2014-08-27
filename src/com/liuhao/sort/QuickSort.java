@@ -1,50 +1,68 @@
 package com.liuhao.sort;
 
+import java.util.Arrays;
+
+/**
+ * å¿«é€Ÿæ’åºçš„Javaå®ç°
+ * @author liuhao
+ *
+ */
 public class QuickSort {
 
-	private int getMiddle(int[] a, int left, int right) {
+	/**
+	 * @param data
+	 * @param start
+	 * @param end
+	 */
+	private static int subSort(DataWrap[] data, int start, int end){
 
-		int temp = a[left]; // Êı×éµÄµÚÒ»¸öÊı×÷Îª»ù×¼
-
-		while (left < right) {
-			while (left < right && a[right] >= temp) {
-				right--;
+		DataWrap tmp = data[start];
+		while(start < end){
+			while( start < end && data[end].compareTo(tmp) >= 0){
+				end--;
 			}
-			//±È»ù×¼Ğ¡µÄÊı¾İÒÆµ½×ó¶Ë
-			a[left] = a[right];
-
-			while (left < right && a[left] <= temp) {
-				left++;
+			data[start] = data[end];
+			
+			while(start < end && data[start].compareTo(tmp) <= 0){
+				start++;
 			}
-			//±È»ù×¼´óµÄÊı¾İÒÆµ½ÓÒ¶Ë
-			a[right] = a[left];
+			data[end] = data[start];
 		}
 		
-		a[left] = temp;
-
-		return left;
+		data[end] = tmp;
+		
+		System.out.println(Arrays.toString(data));
+		
+		return start;
 	}
-
-	private void quick(int[] a, int left, int right) {
-		if (left < right) {
-			
-			//½«Êı×éa½øĞĞ·Ö¸î
-			int middle = getMiddle(a, left, right);
-			
-			//¶Ô×ó¶ËÊı×é½øĞĞ¿ìËÙÅÅĞò
-			quick(a, left, middle - 1);
-			
-			//¶ÔÓÒ¶ËÊı×é½øĞĞ¿ìËÙÅÅĞò
-			quick(a, middle + 1, right);
+	
+	/**
+	 * é€’å½’è¿›è¡Œå¿«é€Ÿæ’åº
+	 * @param data
+	 * @param start
+	 * @param end
+	 */
+	public static void quickSort(DataWrap[] data, int start, int end){
+		if(start < end){
+			int key = subSort(data, start, end);
+			quickSort(data, start, key-1);
+			quickSort(data, key+1, end);
 		}
 	}
-
-	public int[] quickSort(int[] a) {
-
-		if (a.length > 0) {
-			quick(a, 0, a.length - 1);
-		}
-
-		return a;
+	
+	public static void main(String[] args) {
+		DataWrap[] data = {
+				new DataWrap(21, "")
+				,new DataWrap(30, "")
+				,new DataWrap(49, "")
+				,new DataWrap(30, "*")
+				,new DataWrap(16, "")
+				,new DataWrap(9, "")
+		};
+		
+		System.out.println("æ’åºä¹‹å‰ï¼š" + Arrays.toString(data));
+		quickSort(data, 0, data.length-1);
+		System.out.println("æ’åºä¹‹åï¼š" + Arrays.toString(data));
 	}
+	
 }
