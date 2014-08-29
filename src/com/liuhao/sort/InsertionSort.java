@@ -1,30 +1,48 @@
 package com.liuhao.sort;
 
+import java.util.Arrays;
+
+/**
+ * ç›´æ¥æ’å…¥æ’åºçš„Javaå®ç°
+ * @author liuhao
+ *
+ */
 public class InsertionSort {
 
-	/**
-	 *  Ö±½Ó²åÈëÅÅĞò
-	 *  »ù±¾Ë¼Ïë£ºÔÚÒªÅÅĞòµÄÒ»×éÊıÖĞ£¬¼ÙÉèÇ°Ãæ(n-1)[n>=2] ¸öÊıÒÑ¾­ÊÇÅÅºÃË³ĞòµÄ£¬
-	 *  ÏÖÔÚÒª°ÑµÚn¸öÊı²åµ½Ç°ÃæµÄÓĞĞòÊıÖĞ£¬Ê¹µÃÕân¸öÊıÒ²ÊÇÅÅºÃË³ĞòµÄ¡£Èç´Ë·´¸´Ñ­»·£¬
-	 *  Ö±µ½È«²¿ÅÅºÃË³Ğò¡£
-	 * @param a
-	 * @return
-	 */
-	public int[] insertSort(int a[]){
+	public static void insertSort(DataWrap[] data){
+		int arrayLength = data.length;
 		
-		int temp = 0;
-		
-		for(int i=1; i<a.length; i++){
-			int j = i-1;
-			temp = a[i];
+		for(int i=1; i<arrayLength; i++){
+			DataWrap tmp = data[i];//å½“æ•´ä½“åç§»æ—¶ï¼Œä¿è¯å½“å‰çš„data[i]ä¸ä¼šä¸¢å¤±
 			
-			for(;j>=0 && a[j]>temp; j--){
-				a[j+1] = a[j];
+			int j=i-1;
+			
+			//ä»å½“å‰ï¼ˆiæŒ‡å‘ï¼‰ç´¢å¼•çš„å‰ä¸€ä¸ªï¼ˆjæŒ‡å‘ï¼‰å¼€å§‹ï¼Œä¸å½“å‰ç´¢å¼•å€¼è¿›è¡Œæ¯”è¾ƒ
+			//è‹¥å¤§äºï¼Œåˆ™å°†data[j]åç§»è‡³data[j+1]å¤„ï¼Œç›´è‡³åˆ°å°äºçš„çŠ¶æ€ï¼ˆå³åˆé€‚çš„æ’å…¥ä½ç½®ï¼‰
+			for(; j>=0 && tmp.compareTo(data[j]) < 0;j--){
+				// iå¤„çš„å€¼å°äºjå¤„çš„å€¼
+					data[j+1] = data[j];
 			}
 			
-			a[j+1] = temp;
+			//å°†ä¹‹å‰ä¿å­˜çš„tmpå€¼æ’å…¥
+			data[j+1] = tmp;
+			System.out.println(Arrays.toString(data));
 		}
-		
-		return a;
 	}
+	
+	public static void main(String[] args) {
+		DataWrap[] data = {
+				new DataWrap(21, "")
+				,new DataWrap(30, "")
+				,new DataWrap(49, "")
+				,new DataWrap(30, "*")
+				,new DataWrap(16, "")
+				,new DataWrap(9, "")
+		};
+		
+		System.out.println("æ’åºä¹‹å‰ï¼š" + Arrays.toString(data));
+		insertSort(data);
+		System.out.println("æ’åºä¹‹åï¼š" + Arrays.toString(data));
+	}
+	
 }
